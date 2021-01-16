@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 3.5f;      
+    private float _speed = 3.5f;
+    [SerializeField]
+    private GameObject _laserPrefab;     
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+        bool spaceKeyClicked = Input.GetKeyDown(KeyCode.Space);
+        if (spaceKeyClicked){
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity); // Quaternion.identity is the default rotation
+        }
     }
 
     void CalculateMovement()
