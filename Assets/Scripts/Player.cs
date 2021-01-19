@@ -22,13 +22,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        bool spaceKeyClicked = Input.GetKeyDown(KeyCode.Space);
-        if (spaceKeyClicked && Time.time > _canFire){
-            _canFire = Time.time + _fireRate;
-            float yOffset = 0.8f;
-            Vector3 laserStartingPosition = transform.position + new Vector3(0, yOffset, 0);
-            Instantiate(_laserPrefab, laserStartingPosition, Quaternion.identity); // Quaternion.identity is the default rotation
-        }
+        FireLaserIfNeeded();
     }
 
     void CalculateMovement()
@@ -47,5 +41,27 @@ public class Player : MonoBehaviour
         else if (transform.position.x < -11.3f){
             transform.position = new Vector3(11.3f, transform.position.y, transform.position.z);
         }
+    }
+
+    void FireLaserIfNeeded()
+    {
+        if (ShouldFireLaser()){
+            _canFire = Time.time + _fireRate;
+            FireLaser();
+        }
+    }
+
+    bool ShouldFireLaser()
+    {
+        bool spaceKeyClicked = Input.GetKeyDown(KeyCode.Space);
+        bool isCooldownFinished = Time.time > _canFire;
+        return spaceKeyClicked && isCooldownFinished;
+    }
+
+    void FireLaser()
+    {
+        float yOffset = 0.8f;
+        Vector3 laserStartingPosition = transform.position + new Vector3(0, yOffset, 0);
+        Instantiate(_laserPrefab, laserStartingPosition, Quaternion.identity); // Quaternion.identity is the default rotation
     }
 }
