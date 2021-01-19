@@ -7,7 +7,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
-    private GameObject _laserPrefab;     
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 0.15f;
+    private float _canFire = -1f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +23,8 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
         bool spaceKeyClicked = Input.GetKeyDown(KeyCode.Space);
-        if (spaceKeyClicked){
+        if (spaceKeyClicked && Time.time > _canFire){
+            _canFire = Time.time + _fireRate;
             float yOffset = 0.8f;
             Vector3 laserStartingPosition = transform.position + new Vector3(0, yOffset, 0);
             Instantiate(_laserPrefab, laserStartingPosition, Quaternion.identity); // Quaternion.identity is the default rotation
