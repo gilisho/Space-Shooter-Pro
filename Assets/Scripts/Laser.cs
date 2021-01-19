@@ -23,5 +23,12 @@ public class Laser : MonoBehaviour
     void CalculateMovement()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        DestroyLaserIfOutOfScreen();
+    }
+
+    void DestroyLaserIfOutOfScreen() {
+        if (transform.position.y > 8f){
+            Destroy(gameObject);
+        }
     }
 }
