@@ -21,7 +21,9 @@ public class Player : MonoBehaviour
         CalculateMovement();
         bool spaceKeyClicked = Input.GetKeyDown(KeyCode.Space);
         if (spaceKeyClicked){
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity); // Quaternion.identity is the default rotation
+            float yOffset = 0.8f;
+            Vector3 laserStartingPosition = transform.position + new Vector3(0, yOffset, 0);
+            Instantiate(_laserPrefab, laserStartingPosition, Quaternion.identity); // Quaternion.identity is the default rotation
         }
     }
 
